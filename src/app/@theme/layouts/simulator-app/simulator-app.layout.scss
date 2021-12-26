@@ -1,0 +1,11 @@
+@import '../../styles/themes';
+
+@include nb-install-component() {
+  ::ng-deep .main-content-simulator-app {
+    padding: 0px !important;
+  }
+
+  ng-content {
+    z-index: 1000;
+  }
+}
