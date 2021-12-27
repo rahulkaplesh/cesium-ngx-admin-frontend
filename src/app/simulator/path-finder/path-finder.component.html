@@ -1,3 +1,45 @@
-<nb-card>
-  Sample Card
+<nb-card id='pathfinder-card-id' class='pathfinder-card' [style.top.px]='cardTopPosition' [style.left.px]='cardLeftPosition' size="medium">
+  <nb-card-header>PATH FINDER</nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <button mat-raised-button color="primary">
+        <nb-icon class="action-icon" icon="plus-circle-outline"></nb-icon>
+        ADD POINT
+      </button>
+    </div>
+    <div class="pathfinder-accordion-container row">
+      <nb-accordion>
+        <nb-accordion-item>
+          <nb-accordion-item-header matRipple>
+            Point - 1
+          </nb-accordion-item-header>
+          <nb-accordion-item-body>
+            <div class="row">
+              <div class="col-3">
+                <mat-form-field>
+                  <mat-label>Lat</mat-label>
+                  <input matInput autocomplete="off">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field>
+                  <mat-label>Lon</mat-label>
+                  <input matInput autocomplete="off">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field>
+                  <mat-label>Alt</mat-label>
+                  <input matInput autocomplete="off">
+                </mat-form-field>
+              </div>
+              <div class="col-3 vertical-center">
+                <nb-icon icon="hand-pointer" pack="far"></nb-icon>
+              </div>
+            </div>
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion>
+    </div>
+  </nb-card-body>
 </nb-card>

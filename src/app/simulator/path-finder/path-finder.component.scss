@@ -1,0 +1,44 @@
+@import '../../@theme/styles/themes';
+
+@include nb-install-component() {
+  .pathfinder-card {
+    position: absolute;
+    top: 100px;
+    float: right;
+    max-height: 400px;
+    left: 100px;
+    width: 350px;
+    nb-card-body {
+      padding: 10px;
+      ::ng-deep .row {
+        margin: 0px;
+      }
+      .pathfinder-accordion-container {
+        width: 100%;
+        margin-top: 5px;
+        ::ng-deep nb-accordion {
+          width: 100%;
+          ::ng-deep nb-accordion-item-header {
+            padding: 10px;
+          }
+          ::ng-deep nb-accordion-item-body {
+            .item-body {
+              padding: 0px;
+              padding-top: 7.5px;
+            }
+            ::ng-deep mat-form-field {
+              display: block;
+            }
+            ::ng-deep .vertical-center {
+              text-align: center;
+              align-self: center;
+              nb-icon {
+                cursor: pointer;
+              }
+            }
+          }
+        }
+      }
+    } 
+  }
+}
