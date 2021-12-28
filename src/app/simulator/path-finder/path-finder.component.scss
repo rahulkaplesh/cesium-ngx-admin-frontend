@@ -20,6 +20,12 @@
           width: 100%;
           ::ng-deep nb-accordion-item-header {
             padding: 10px;
+            ::ng-deep .expansion-indicator{
+              display: none;
+            }
+            ::ng-deep .delete-icon {
+              color: nb-theme(text-danger-color)
+            }
           }
           ::ng-deep nb-accordion-item-body {
             .item-body {
