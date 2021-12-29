@@ -31,5 +31,6 @@ import { PathFinderComponent } from './path-finder/path-finder.component';
     MatInputModule,
   ],
   bootstrap: [SimulatorComponent],
+  providers: [],
 })
 export class SimulatorModule { }

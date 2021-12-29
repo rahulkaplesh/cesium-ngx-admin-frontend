@@ -14,10 +14,11 @@ import { ViewerConfiguration } from 'angular-cesium';
     </nb-sidebar>
     <nb-layout-column class="main-content-simulator-app">
       <div [style.height.px]="cesiumMapHeight">
+        <!--TODO : To move this map to each card component -->
         <ac-map id='cesium-map'>
+          <ng-content select="router-outlet"></ng-content>
         </ac-map>
       </div>
-      <ng-content select="router-outlet"></ng-content>
     </nb-layout-column>
   </nb-layout>
   `,

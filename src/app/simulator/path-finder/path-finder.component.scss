@@ -2,6 +2,7 @@
 
 @include nb-install-component() {
   .pathfinder-card {
+    z-index: 1000;
     position: absolute;
     top: 100px;
     float: right;
