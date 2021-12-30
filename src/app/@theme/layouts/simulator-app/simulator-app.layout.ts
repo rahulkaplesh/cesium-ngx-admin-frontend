@@ -13,51 +13,17 @@ import { ViewerConfiguration } from 'angular-cesium';
       <ng-content select="nb-menu"></ng-content>
     </nb-sidebar>
     <nb-layout-column class="main-content-simulator-app">
-      <div [style.height.px]="cesiumMapHeight">
-        <!--TODO : To move this map to each card component -->
-        <ac-map id='cesium-map'>
-          <ng-content select="router-outlet"></ng-content>
-        </ac-map>
-      </div>
+      <ng-content select="router-outlet"></ng-content>
     </nb-layout-column>
   </nb-layout>
   `,
   providers: [ViewerConfiguration],
 })
-export class SimulatorAppLayoutComponent implements OnInit, AfterContentInit {
+export class SimulatorAppLayoutComponent implements OnInit{
 
-  cesiumMapHeight: number = 300;
-
-  constructor(private viewerConf: ViewerConfiguration) {
-    viewerConf.viewerOptions = {
-      selectionIndicator: false,
-      timeline: false,
-      infoBox: false,
-      fullscreenButton: false,
-      baseLayerPicker: false,
-      animation: false,
-      shouldAnimate: false,
-      homeButton: false,
-      geocoder: false,
-      scene3DOnly: true,
-      navigationHelpButton: false,
-      navigationInstructionsInitiallyVisible: false,
-      imageryProvider: new Cesium.BingMapsImageryProvider({
-        url : 'https://dev.virtualearth.net',
-        key: 'AmL2tQokxYaKGlIn_y1FF7eR3NsGmreYY8BiLYsCBGVYVPTksjK5j3dQg5NfGUwJ',
-        mapStyle: Cesium.BingMapsStyle.AERIAL_WITH_LABELS  
-      }),
-    };
-  }
+  constructor(private viewerConf: ViewerConfiguration) { }
 
   ngOnInit(): void { }
 
-  ngAfterContentInit(): void {
-    this.cesiumMapHeight = (window.innerHeight - document.getElementById('simulatorAppHeader').offsetHeight - 1);
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.cesiumMapHeight = (window.innerHeight - document.getElementById('simulatorAppHeader').offsetHeight - 1);
-  }
+  ngAfterContentInit(): void { }
 }

@@ -36,7 +36,7 @@
                 </mat-form-field>
               </div>
               <div class="col-3 vertical-center">
-                <nb-icon icon="hand-pointer" pack="far"></nb-icon>
+                <nb-icon icon="hand-pointer" pack="far" (click)="selectPointMap(point.name)"></nb-icon>
               </div>
             </div>
           </nb-accordion-item-body>
@@ -45,6 +45,17 @@
     </div>
   </nb-card-body>
 </nb-card>
-<ac-map style="display:none">
-  <points-editor></points-editor>
-</ac-map>
+<div [style.height.px]="cesiumMapHeight">
+  <ac-map>
+    <ng-container *ngFor="let point of visualPoints">
+      <!--TODO : To use this to represent points and pointeditor service with option isvirualselectpoint true for selecting on map!-->
+      <ac-point [props]="{
+        position: point.position,
+        pixelSize: 10
+      }">
+      </ac-point>
+    </ng-container>
+    <points-editor></points-editor>
+  </ac-map>
+</div>
+
