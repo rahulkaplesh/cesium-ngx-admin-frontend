@@ -12,12 +12,12 @@ export class PathfinderService {
 
   constructor() { }
 
-  addPoint(): void {
+  addPoint(point: Point): void {
     this.points = [...this.points, {
       name: `Point - ${this.points.length + 1}`,
-      lat: 0.0,
-      lon: 0.0,
-      alt: 0.0,
+      lat: point.lat,
+      lon: point.lon,
+      alt: point.alt,
     }];
     this.pointsListChange.emit(this.points);
   }

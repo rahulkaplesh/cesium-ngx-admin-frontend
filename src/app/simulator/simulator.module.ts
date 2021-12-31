@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbAccordionModule, NbIconModule, NbMenuModule } from '@nebular/theme';
+import { NbAccordionModule, NbActionsModule, NbIconModule, NbMenuModule } from '@nebular/theme';
 import { SimulatorComponent } from './simulator.component';
 
 import { ThemeModule } from '../@theme/theme.module';
@@ -29,6 +29,7 @@ import { PathFinderComponent } from './path-finder/path-finder.component';
     NbIconModule,
     NbAccordionModule,
     MatInputModule,
+    NbActionsModule,
   ],
   bootstrap: [SimulatorComponent],
   providers: [],

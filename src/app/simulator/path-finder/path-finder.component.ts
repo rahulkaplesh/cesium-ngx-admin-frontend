@@ -21,6 +21,10 @@ interface VisualPoints {
 })
 export class PathFinderComponent implements OnInit, AfterContentInit, OnDestroy {
 
+  showVertexInput: boolean = true;
+  showEdgesInput: boolean = false;
+  showShortestDistance: boolean = false;
+
   pointsList : Point[] = [];
   visualPoints: VisualPoints[] = [];
   show: boolean = true;
@@ -84,8 +88,35 @@ export class PathFinderComponent implements OnInit, AfterContentInit, OnDestroy 
     this.cardLeftPosition = window.innerWidth - (document.getElementById('pathfinder-card-id').offsetWidth + this.padding);
   }
 
+  showPoints(): void {
+    this.showVertexInput = true;
+    this.showEdgesInput = false;
+    this.showShortestDistance = false;
+  }
+
+  showSegments(): void {
+    this.showVertexInput = false;
+    this.showEdgesInput = true;
+    this.showShortestDistance = false;
+  }
+
+  showShortestDistanceInput(): void {
+    this.showVertexInput = false;
+    this.showEdgesInput = false;
+    this.showShortestDistance = true;
+  }
+
   addPoint(): void {
-    this.pathFinderService.addPoint();
+    let edittingEvent = this.pointEditorService.create();
+    edittingEvent.subscribe(editResult => {
+      if (editResult.editMode == 2) {
+        console.log(editResult.position);
+        let pointToAdd = convertCartesianPointsToPathFinderPoint(editResult.position, "");
+        pointToAdd.alt = 5000;
+        this.pathFinderService.addPoint(pointToAdd);
+        edittingEvent.dispose();
+      }
+    });
   }
 
   deletePoint(name: string): void {
