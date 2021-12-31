@@ -5,8 +5,9 @@ import { Subscription } from 'rxjs';
 import { Point } from '../models/path-finder';
 
 import { PathfinderService } from '../services/pathfinder.service';
-import { PointEditorObservable, Cartesian3, PointsEditorService, ViewerConfiguration } from 'angular-cesium';
+import { PointEditorObservable, Cartesian3, PointsEditorService, ViewerConfiguration, AcEntity } from 'angular-cesium';
 import { convertCartesianPointsToPathFinderPoint, convertPathFinderPointsToCartesianPoints } from '../utilities/utilities';
+import Entity from 'cesium/Source/DataSources/Entity';
 
 interface VisualPoints {
   name: string,
@@ -124,9 +125,15 @@ export class PathFinderComponent implements OnInit, AfterContentInit, OnDestroy 
   }
 
   selectPointMap(name: string): void {
-    //let pointWorking = this.visualPoints.filter(elem => elem.point.name === name)[0];
-    //console.log(pointWorking);
-    //pointWorking.editingEvent = this.pointEditorService.edit(convertPathFinderPointsToCartesianPoints(pointWorking.point));
+    let edittingEvent = this.pointEditorService.edit(this.visualPoints.filter(elem => elem.name === name)[0].position);
+    edittingEvent.subscribe(editResult => {
+      if (editResult.editAction == 7) {
+        let pointToEdit = convertCartesianPointsToPathFinderPoint(editResult.position, name);
+        pointToEdit.alt = 5000;
+        this.pathFinderService.editPointPosition(pointToEdit);
+        edittingEvent.dispose();
+      }
+    });
   }
 
   ngOnDestroy(): void {

@@ -76,8 +76,9 @@
   <ac-map>
     <ng-container *ngFor="let point of visualPoints">
       <ac-point [props]="{
+        id: point.name,
         position: point.position,
-        pixelSize: 10
+        pixelSize: 7.5
       }">
       </ac-point>
     </ng-container>

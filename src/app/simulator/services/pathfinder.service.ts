@@ -29,4 +29,15 @@ export class PathfinderService {
     });
     this.pointsListChange.emit(this.points);
   }
+
+  editPointPosition(point: Point): void {
+    this.points = this.points.map(elem => {
+      if (elem.name === point.name) {
+        return point;
+      } else {
+        return elem;
+      }
+    });
+    this.pointsListChange.emit(this.points);
+  }
 }
