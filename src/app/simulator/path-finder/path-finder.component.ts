@@ -2,29 +2,38 @@ import { AfterContentInit, Component, HostListener, OnDestroy, OnInit, ViewChild
 import { NbIconLibraries } from '@nebular/theme';
 import { Subscription } from 'rxjs';
 
-import { Point } from '../models/path-finder';
+import { Point, Edge } from '../models/path-finder';
 
 import { PathfinderService } from '../services/pathfinder.service';
-import { PointEditorObservable, Cartesian3, PointsEditorService, ViewerConfiguration, AcEntity } from 'angular-cesium';
+import { Cartesian3, PointsEditorService, ViewerConfiguration, PolylinesEditorService } from 'angular-cesium';
 import { convertCartesianPointsToPathFinderPoint, convertPathFinderPointsToCartesianPoints } from '../utilities/utilities';
 import Entity from 'cesium/Source/DataSources/Entity';
+import { point } from 'leaflet';
 
 interface VisualPoints {
   name: string,
   position: Cartesian3
 }
 
+interface VisualEdges {
+  name: string,
+  positions: Cartesian3[]
+}
+
 @Component({
   selector: 'ngx-path-finder',
   templateUrl: './path-finder.component.html',
   styleUrls: ['./path-finder.component.scss'],
-  providers: [PathfinderService, PointsEditorService]
+  providers: [PathfinderService, PointsEditorService, PolylinesEditorService]
 })
 export class PathFinderComponent implements OnInit, AfterContentInit, OnDestroy {
 
   showVertexInput: boolean = true;
   showEdgesInput: boolean = false;
   showShortestDistance: boolean = false;
+
+  edgesList: Edge[] = [];
+  visualEdges: VisualEdges[] = [];
 
   pointsList : Point[] = [];
   visualPoints: VisualPoints[] = [];
@@ -36,11 +45,15 @@ export class PathFinderComponent implements OnInit, AfterContentInit, OnDestroy 
   cardLeftPosition: number = 90;
 
   pointsListChangeSubscription: Subscription = new Subscription();
+  edgesListChangeSubscription: Subscription = new Subscription();
+
+  allowPointAdditionToEdge: boolean = false;
 
   constructor(private viewerConf: ViewerConfiguration,
               iconsLibrary: NbIconLibraries, 
               private pathFinderService: PathfinderService, 
-              private pointEditorService: PointsEditorService) { 
+              private pointEditorService: PointsEditorService,
+              private polylinesEditorService: PolylinesEditorService) { 
     iconsLibrary.registerFontPack('far', { packClass: 'far', iconClassPrefix: 'fa' });
     this.viewerConf.viewerOptions = {
       selectionIndicator: false,
@@ -74,6 +87,16 @@ export class PathFinderComponent implements OnInit, AfterContentInit, OnDestroy 
         })
       });
     });
+    this.edgesListChangeSubscription = this.pathFinderService.edgesListChange.subscribe((edges: Edge[]) => {
+      this.edgesList = edges;
+      this.visualEdges.splice(0, this.visualEdges.length);
+      this.edgesList.forEach(edge => {
+        this.visualEdges.push({
+          name: edge.name,
+          positions: [convertPathFinderPointsToCartesianPoints(edge.source), convertPathFinderPointsToCartesianPoints(edge.target)]
+        });
+      });
+    })
   }
 
   ngAfterContentInit(): void {
@@ -134,6 +157,14 @@ export class PathFinderComponent implements OnInit, AfterContentInit, OnDestroy 
         edittingEvent.dispose();
       }
     });
+  }
+
+  addEdge(): void {
+    if (this.pointsList.length > 1) {
+      //TODO : To add edge adding logic
+    } else {
+      console.log("!Too few points error!");
+    }
   }
 
   ngOnDestroy(): void {

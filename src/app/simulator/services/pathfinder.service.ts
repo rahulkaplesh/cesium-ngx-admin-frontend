@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { Point } from '../models/path-finder';
+import { Point, Edge } from '../models/path-finder';
 
 @Injectable({
   providedIn: 'root'
@@ -7,8 +7,10 @@ import { Point } from '../models/path-finder';
 export class PathfinderService {
 
   points: Point[] = [];
+  edges: Edge[] = [];
 
   pointsListChange: EventEmitter<Point[]> = new EventEmitter();
+  edgesListChange: EventEmitter<Edge[]> = new EventEmitter();
 
   constructor() { }
 
@@ -39,5 +41,34 @@ export class PathfinderService {
       }
     });
     this.pointsListChange.emit(this.points);
+  }
+
+  addEdge(source: Point, target: Point): void {
+    this.edges = [...this.edges, 
+    {
+      name: `Edge - ${this.points.length + 1}`,
+      source,
+      target
+    }];
+    this.edgesListChange.emit(this.edges);
+  }
+
+  removeEdge(name: string): void {
+    this.edges = this.edges.filter(elem => elem.name != name);
+    this.edges.forEach((point, index) => {
+      point.name = `Point - ${index + 1}`;
+    });
+    this.edgesListChange.emit(this.edges);
+  }
+
+  editEdgePositions(edge: Edge): void {
+    this.edges = this.edges.map(elem => {
+      if (elem.name === edge.name) {
+        return edge;
+      } else {
+        return elem;
+      }
+    });
+    this.edgesListChange.emit(this.edges);
   }
 }

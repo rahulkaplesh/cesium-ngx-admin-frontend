@@ -4,3 +4,9 @@ export interface Point {
   lon: number,
   alt: number,
 }
+
+export interface Edge {
+  name: string,
+  source: Point,
+  target: Point
+}
