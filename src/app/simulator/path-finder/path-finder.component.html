@@ -68,34 +68,33 @@
       </div>
       <div class="pathfinder-accordion-container row">
         <nb-accordion>
-          <nb-accordion-item *ngFor="let point of edgesList">
+          <nb-accordion-item *ngFor="let edge of edgesList">
             <nb-accordion-item-header matRipple>
-              <span>{{point.name}}</span>
+              <span>{{edge.name}}</span>
               <div style="flex-grow: 1;"></div>
-              <nb-icon class="delete-icon" icon="trash-2-outline" (click)="deletePoint(point.name)"></nb-icon>
+              <nb-icon class="delete-icon" icon="trash-2-outline" (click)="deletePoint(edge.name)"></nb-icon>
             </nb-accordion-item-header>
             <nb-accordion-item-body>
               <div class="row">
-                <div class="col-3">
+                <div class="col-6">
                   <mat-form-field>
-                    <mat-label>Lat</mat-label>
-                    <input matInput value="{{point.lat.toFixed(6)}}" autocomplete="off">
+                    <mat-label>Source</mat-label>
+                    <mat-select>
+                      <ng-container *ngFor="let point of pointsList">
+                        <mat-option value="point">{{point.name}}</mat-option>
+                      </ng-container>
+                    </mat-select>
                   </mat-form-field>
                 </div>
-                <div class="col-3">
+                <div class="col-6">
                   <mat-form-field>
-                    <mat-label>Lon</mat-label>
-                    <input matInput value="{{point.lon.toFixed(6)}}" autocomplete="off">
+                    <mat-label>Target</mat-label>
+                    <mat-select>
+                      <ng-container *ngFor="let point of pointsList">
+                        <mat-option value="point">{{point.name}}</mat-option>
+                      </ng-container>
+                    </mat-select>
                   </mat-form-field>
-                </div>
-                <div class="col-3">
-                  <mat-form-field>
-                    <mat-label>Alt</mat-label>
-                    <input matInput value="{{point.alt.toFixed(2)}}" autocomplete="off">
-                  </mat-form-field>
-                </div>
-                <div class="col-3 vertical-center">
-                  <nb-icon icon="hand-pointer" pack="far" (click)="selectPointMap(point.name)"></nb-icon>
                 </div>
               </div>
             </nb-accordion-item-body>

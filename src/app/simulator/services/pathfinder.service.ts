@@ -46,7 +46,7 @@ export class PathfinderService {
   addEdge(source: Point, target: Point): void {
     this.edges = [...this.edges, 
     {
-      name: `Edge - ${this.points.length + 1}`,
+      name: `Edge - ${this.edges.length + 1}`,
       source,
       target
     }];

@@ -11,6 +11,8 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { AngularCesiumModule, AngularCesiumWidgetsModule } from 'angular-cesium';
 import { PathFinderComponent } from './path-finder/path-finder.component';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { PathFinderComponent } from './path-finder/path-finder.component';
     AngularCesiumWidgetsModule,
     NbIconModule,
     NbAccordionModule,
+    FormsModule,
     MatInputModule,
+    MatSelectModule,
     NbActionsModule,
   ],
   bootstrap: [SimulatorComponent],

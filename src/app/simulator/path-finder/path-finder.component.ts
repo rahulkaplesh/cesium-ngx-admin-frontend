@@ -39,6 +39,9 @@ export class PathFinderComponent implements OnInit, AfterContentInit, OnDestroy 
   visualPoints: VisualPoints[] = [];
   show: boolean = true;
 
+  selectedSource: string = "Point - 1";
+  selectedTarget: string = "Point - 2";
+
   cesiumMapHeight: number = 300;
   cardTopPosition: number = 86;
   padding: number = 10; // Value in pixels change at path-finder.component.scss file too !!
@@ -161,7 +164,7 @@ export class PathFinderComponent implements OnInit, AfterContentInit, OnDestroy 
 
   addEdge(): void {
     if (this.pointsList.length > 1) {
-      //TODO : To add edge adding logic
+      this.pathFinderService.addEdge(this.pointsList[0], this.pointsList[1]);
     } else {
       console.log("!Too few points error!");
     }
