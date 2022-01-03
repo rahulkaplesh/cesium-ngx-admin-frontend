@@ -56,7 +56,7 @@ export class PathfinderService {
   removeEdge(name: string): void {
     this.edges = this.edges.filter(elem => elem.name != name);
     this.edges.forEach((point, index) => {
-      point.name = `Point - ${index + 1}`;
+      point.name = `Edge - ${index + 1}`;
     });
     this.edgesListChange.emit(this.edges);
   }

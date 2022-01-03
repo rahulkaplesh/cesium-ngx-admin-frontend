@@ -154,6 +154,9 @@ export class PathFinderComponent implements OnInit, AfterContentInit, OnDestroy 
 
   deletePoint(name: string): void {
     this.pathFinderService.deletePoint(name);
+    this.edgesList.filter(edge => edge.source.name === name || edge.target.name === name).forEach(edge => {
+      this.pathFinderService.removeEdge(edge.name);
+    })
   }
 
   selectPointMap(name: string): void {
@@ -179,6 +182,10 @@ export class PathFinderComponent implements OnInit, AfterContentInit, OnDestroy 
   updateEdge(name: string) {
     let edgeToBeEdited = this.edgesList.filter(edge => edge.name === name)[0];
     this.pathFinderService.editEdgePositions(edgeToBeEdited);
+  }
+
+  deleteEdge(name: string) {
+    this.pathFinderService.removeEdge(name);
   }
 
   ngOnDestroy(): void {
