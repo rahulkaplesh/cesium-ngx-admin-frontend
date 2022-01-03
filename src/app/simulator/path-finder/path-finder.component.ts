@@ -28,6 +28,12 @@ interface VisualEdges {
 })
 export class PathFinderComponent implements OnInit, AfterContentInit, OnDestroy {
 
+
+  cesiumLineMaterial = new Cesium.PolylineGlowMaterialProperty({
+    glowPower: 0.2,
+    color: Cesium.Color.CORNFLOWERBLUE
+  });
+
   showVertexInput: boolean = true;
   showEdgesInput: boolean = false;
   showShortestDistance: boolean = false;
@@ -168,6 +174,11 @@ export class PathFinderComponent implements OnInit, AfterContentInit, OnDestroy 
     } else {
       console.log("!Too few points error!");
     }
+  }
+
+  updateEdge(name: string) {
+    let edgeToBeEdited = this.edgesList.filter(edge => edge.name === name)[0];
+    this.pathFinderService.editEdgePositions(edgeToBeEdited);
   }
 
   ngOnDestroy(): void {

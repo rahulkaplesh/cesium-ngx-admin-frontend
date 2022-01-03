@@ -79,20 +79,16 @@
                 <div class="col-6">
                   <mat-form-field>
                     <mat-label>Source</mat-label>
-                    <mat-select>
-                      <ng-container *ngFor="let point of pointsList">
-                        <mat-option value="point">{{point.name}}</mat-option>
-                      </ng-container>
+                    <mat-select [(ngModel)]="edge.source" (selectionChange)="updateEdge(edge.name)">
+                      <mat-option *ngFor="let point of pointsList" [value]="point">{{point.name}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
                 <div class="col-6">
                   <mat-form-field>
                     <mat-label>Target</mat-label>
-                    <mat-select>
-                      <ng-container *ngFor="let point of pointsList">
-                        <mat-option value="point">{{point.name}}</mat-option>
-                      </ng-container>
+                    <mat-select [(ngModel)]="edge.target"(selectionChange)="updateEdge(edge.name)">
+                      <mat-option *ngFor="let point of pointsList" [value]="point">{{point.name}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
@@ -117,8 +113,18 @@
       }" (click)="addPointToEdge(point)">
       </ac-point>
     </ng-container>
+    <ng-container *ngFor="let edge of visualEdges">
+      <ac-polyline [props]="{
+        id: edge.name,
+        positions: edge.positions,
+        text: edge.name,
+        font: '30px sans-serif',
+        material: cesiumLineMaterial,
+        width: 8
+      }">
+      </ac-polyline>
+    </ng-container>
     <points-editor></points-editor>
-    <polylines-editor></polylines-editor>
   </ac-map>
 </div>
 
