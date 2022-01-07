@@ -98,8 +98,50 @@
         </nb-accordion>
       </div>
     </ng-container>
-    <ng-container *ngIf="showShortestDistance">
-      <p>Hello</p>
+    <ng-container *ngIf="showShortestDistance && pointsList.length > 1">
+      <div class = "row">
+        <button mat-raised-button color="primary" (click)="exportData()">
+          <nb-icon class="action-icon" icon="plus-circle-outline"></nb-icon>
+          EXPORT
+        </button>
+        <button mat-raised-button color="primary" (click)="importData()">
+          <nb-icon class="action-icon" icon="plus-circle-outline"></nb-icon>
+          IMPORT
+        </button>
+      </div>
+      <div class="pathfinder-accordion-container row">
+        <nb-accordion>
+        <nb-accordion-item>
+          <nb-accordion-item-header matRipple>
+            <span>Start & End Point</span>
+            <div style="flex-grow: 1;"></div>
+          </nb-accordion-item-header>
+          <nb-accordion-item-body>
+            <div class="row">
+              <div class="col-6">
+                <mat-form-field>
+                  <mat-label>Start Point</mat-label>
+                  <mat-select [(ngModel)]="startPoint">
+                    <mat-option *ngFor="let point of pointsList" [value]="point">{{point.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-6">
+                <mat-form-field>
+                  <mat-label>End Point</mat-label>
+                  <mat-select [(ngModel)]="endPoint">
+                    <mat-option *ngFor="let point of pointsList" [value]="point">{{point.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+        </nb-accordion>
+      </div>
+      <div class="row">
+
+      </div>
     </ng-container>
   </nb-card-body>
 </nb-card>

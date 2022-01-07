@@ -9,6 +9,7 @@ import { Cartesian3, PointsEditorService, ViewerConfiguration, PolylinesEditorSe
 import { convertCartesianPointsToPathFinderPoint, convertPathFinderPointsToCartesianPoints } from '../utilities/utilities';
 import Entity from 'cesium/Source/DataSources/Entity';
 import { point } from 'leaflet';
+import { saveAs } from 'file-saver';
 
 interface VisualPoints {
   name: string,
@@ -20,6 +21,13 @@ interface VisualEdges {
   positions: Cartesian3[]
 }
 
+interface DataStructure {
+  points: Point[],
+  edges: Edge[],
+  startPoint: Point,
+  endPoint: Point
+}
+
 @Component({
   selector: 'ngx-path-finder',
   templateUrl: './path-finder.component.html',
@@ -28,6 +36,8 @@ interface VisualEdges {
 })
 export class PathFinderComponent implements OnInit, AfterContentInit, OnDestroy {
 
+  startPoint: Point;
+  endPoint: Point;
 
   cesiumLineMaterial = new Cesium.PolylineGlowMaterialProperty({
     glowPower: 0.2,
@@ -44,9 +54,6 @@ export class PathFinderComponent implements OnInit, AfterContentInit, OnDestroy 
   pointsList : Point[] = [];
   visualPoints: VisualPoints[] = [];
   show: boolean = true;
-
-  selectedSource: string = "Point - 1";
-  selectedTarget: string = "Point - 2";
 
   cesiumMapHeight: number = 300;
   cardTopPosition: number = 86;
@@ -88,6 +95,8 @@ export class PathFinderComponent implements OnInit, AfterContentInit, OnDestroy 
   ngOnInit(): void {
     this.pointsListChangeSubscription = this.pathFinderService.pointsListChange.subscribe((points: Point[]) => {
       this.pointsList = points;
+      this.startPoint = this.pointsList[0];
+      this.endPoint = this.pointsList[1];
       this.visualPoints.splice(0, this.visualPoints.length);
       this.pointsList.forEach(point => {
         this.visualPoints.push({
@@ -188,8 +197,24 @@ export class PathFinderComponent implements OnInit, AfterContentInit, OnDestroy 
     this.pathFinderService.removeEdge(name);
   }
 
+  exportData() {
+    let dataStructureExport: DataStructure = {
+      points: this.pointsList,
+      edges: this.edgesList,
+      startPoint: this.startPoint,
+      endPoint: this.endPoint
+    }
+    let blob = new Blob([JSON.stringify(dataStructureExport, null, 2)], {type: "text/plain;charset=utf-8"});
+    saveAs(blob, 'Scenario.txt');
+  }
+
+  importData() {
+    
+  }
+
   ngOnDestroy(): void {
     this.pointsListChangeSubscription.unsubscribe();
+    this.edgesListChangeSubscription.unsubscribe();
   }
 
 }
