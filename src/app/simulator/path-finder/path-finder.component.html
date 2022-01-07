@@ -98,18 +98,23 @@
         </nb-accordion>
       </div>
     </ng-container>
-    <ng-container *ngIf="showShortestDistance && pointsList.length > 1">
+    <ng-container *ngIf="showShortestDistance">
       <div class = "row">
-        <button mat-raised-button color="primary" (click)="exportData()">
-          <nb-icon class="action-icon" icon="plus-circle-outline"></nb-icon>
-          EXPORT
-        </button>
-        <button mat-raised-button color="primary" (click)="importData()">
-          <nb-icon class="action-icon" icon="plus-circle-outline"></nb-icon>
-          IMPORT
-        </button>
+        <div class="col-12">
+          <nb-actions size="medium" fullWidth>
+            <nb-action matRipple (click)="exportData()">
+              <nb-icon icon="download"></nb-icon>
+              <span>EXPORT</span>
+            </nb-action>
+            <nb-action matRipple (click)="importData()">
+              <nb-icon icon="upload"></nb-icon>
+              <span>IMPORT</span>
+            </nb-action>
+          </nb-actions>
+        </div>
+        <input id="file-upload" style="display: none" type="file" (change)="loadScenario($event)"/>
       </div>
-      <div class="pathfinder-accordion-container row">
+      <div *ngIf="pointsList.length > 1" class="pathfinder-accordion-container row">
         <nb-accordion>
         <nb-accordion-item>
           <nb-accordion-item-header matRipple>
@@ -140,7 +145,7 @@
         </nb-accordion>
       </div>
       <div class="row">
-
+        <!--TODO : To add button to make a rest call here !!-->
       </div>
     </ng-container>
   </nb-card-body>

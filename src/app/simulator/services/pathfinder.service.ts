@@ -71,4 +71,11 @@ export class PathfinderService {
     });
     this.edgesListChange.emit(this.edges);
   }
+
+  updateData(points: Point[], edges: Edge[]) {
+    this.points = points;
+    this.pointsListChange.emit(this.points);
+    this.edges = edges;
+    this.edgesListChange.emit(this.edges);
+  }
 }

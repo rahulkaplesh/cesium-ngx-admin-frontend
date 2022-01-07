@@ -209,7 +209,24 @@ export class PathFinderComponent implements OnInit, AfterContentInit, OnDestroy 
   }
 
   importData() {
-    
+    document.getElementById('file-upload').click();
+  }
+
+  loadScenario(event: Event) {
+    console.log(event);
+    let input = event.target;
+    console.log(input);
+
+    let reader: FileReader = new FileReader();
+    reader.onload = () => {
+      let inputTxt = reader.result;
+      let data: DataStructure = JSON.parse(inputTxt as string);
+      this.pathFinderService.updateData(data.points, data.edges);
+      this.startPoint = data.startPoint;
+      this.endPoint = data.endPoint;
+    }
+    //@ts-ignore
+    reader.readAsText(input.files[0]);
   }
 
   ngOnDestroy(): void {
