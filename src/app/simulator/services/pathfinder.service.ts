@@ -1,5 +1,9 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Point, Edge } from '../models/path-finder';
+import { DataStructure } from '../path-finder/path-finder.component';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +16,11 @@ export class PathfinderService {
   pointsListChange: EventEmitter<Point[]> = new EventEmitter();
   edgesListChange: EventEmitter<Edge[]> = new EventEmitter();
 
-  constructor() { }
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'})
+  };
+
+  constructor(private http: HttpClient) { }
 
   addPoint(point: Point): void {
     this.points = [...this.points, {
@@ -77,5 +85,15 @@ export class PathfinderService {
     this.pointsListChange.emit(this.points);
     this.edges = edges;
     this.edgesListChange.emit(this.edges);
+  }
+
+  computeShortestPath(dataToSend: DataStructure): Observable<any> {
+    const url = 'http://127.0.0.1:8080/get-shortest-path';
+    return this.http.post<any>(url, dataToSend, this.httpOptions)
+      .pipe(
+        map((returnData) => {
+          return returnData;
+        })
+      )
   }
 }

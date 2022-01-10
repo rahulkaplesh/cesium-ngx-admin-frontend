@@ -144,8 +144,11 @@
         </nb-accordion-item>
         </nb-accordion>
       </div>
-      <div class="row">
-        <!--TODO : To add button to make a rest call here !!-->
+      <div class="row" style="justify-content: center;">
+        <button mat-raised-button color="primary" (click)="computeShortestPath()">
+          <nb-icon class="action-icon" icon="plus-circle-outline"></nb-icon>
+          CALCULATE
+        </button>
       </div>
     </ng-container>
   </nb-card-body>

@@ -21,7 +21,7 @@ interface VisualEdges {
   positions: Cartesian3[]
 }
 
-interface DataStructure {
+export interface DataStructure {
   points: Point[],
   edges: Edge[],
   startPoint: Point,
@@ -227,6 +227,19 @@ export class PathFinderComponent implements OnInit, AfterContentInit, OnDestroy 
     }
     //@ts-ignore
     reader.readAsText(input.files[0]);
+  }
+
+  computeShortestPath() {
+    let dataToSend: DataStructure = {
+      points: this.pointsList,
+      edges: this.edgesList,
+      startPoint: this.startPoint,
+      endPoint: this.endPoint
+    };
+    this.pathFinderService.computeShortestPath(dataToSend)
+      .subscribe(result => {
+        console.log(result);
+      });
   }
 
   ngOnDestroy(): void {
