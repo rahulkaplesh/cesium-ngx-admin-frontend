@@ -55,6 +55,9 @@ export class PathFinderComponent implements OnInit, AfterContentInit, OnDestroy 
   visualPoints: VisualPoints[] = [];
   show: boolean = true;
 
+  resultEdges: Edge[] = [];
+  distanceCovered: number;
+
   cesiumMapHeight: number = 300;
   cardTopPosition: number = 86;
   padding: number = 10; // Value in pixels change at path-finder.component.scss file too !!

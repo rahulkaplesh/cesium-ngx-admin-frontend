@@ -17,7 +17,7 @@ export class PathfinderService {
   edgesListChange: EventEmitter<Edge[]> = new EventEmitter();
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'})
+    headers: new HttpHeaders({ 'Content-Type': 'application/json'})
   };
 
   constructor(private http: HttpClient) { }
